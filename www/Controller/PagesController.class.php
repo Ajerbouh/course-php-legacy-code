@@ -1,4 +1,6 @@
 <?php
+namespace Controller;
+use Core\View;
 
 class PagesController
 {

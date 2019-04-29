@@ -1,5 +1,5 @@
 <?php
-
+namespace www\models;
 class Users extends BaseSQL
 {
     public $id = null;

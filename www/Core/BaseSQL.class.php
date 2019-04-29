@@ -1,5 +1,6 @@
 <?php
 
+namespace Core;
 class BaseSQL
 {
     private $pdo;
