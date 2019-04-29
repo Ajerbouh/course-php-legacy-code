@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 namespace Core;
 class BaseSQL
 {
@@ -18,7 +18,7 @@ class BaseSQL
         $this->table = get_called_class();
     }
 
-    public function setId($id)
+    public function setId($id): void
     {
         $this->id = $id;
         $this->getOneBy(['id' => $id], true);
@@ -50,7 +50,7 @@ class BaseSQL
         return $query->fetch();
     }
 
-    public function save()
+    public function save(): void
     {
         $dataObject = get_object_vars($this);
         $dataChild = array_diff_key($dataObject, get_class_vars(get_class()));

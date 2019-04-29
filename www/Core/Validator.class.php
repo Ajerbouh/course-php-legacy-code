@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 namespace Core;
 
 
@@ -7,7 +7,7 @@ class Validator
 {
     public $errors = [];
 
-    public function __construct($config, $data)
+    public function __construct(Array $config, int $data)
     {
         if (count($data) != count($config['data'])) {
             die('Tentative : faille XSS');
@@ -42,27 +42,27 @@ class Validator
         }
     }
 
-    public static function notEmpty($string)
+    public static function notEmpty(string $string): bool
     {
         return !empty(trim($string));
     }
 
-    public static function minLength($string, $length)
+    public static function minLength(string $string, int $length): bool
     {
         return strlen(trim($string)) >= $length;
     }
 
-    public static function maxLength($string, $length)
+    public static function maxLength(string $string, $length): bool
     {
         return strlen(trim($string)) <= $length;
     }
 
-    public static function checkEmail($string)
+    public static function checkEmail(string $string): string
     {
         return filter_var(trim($string), FILTER_VALIDATE_EMAIL);
     }
 
-    public static function checkPassword($string)
+    public static function checkPassword(string $string): string
     {
         return
                     preg_match('#[a-z]#', $string) &&
