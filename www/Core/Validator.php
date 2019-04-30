@@ -2,12 +2,11 @@
 declare(strict_types = 1);
 namespace Core;
 
-
 class Validator
 {
-    public $errors = [];
+    private $errors = [];
 
-    public function __construct(Array $config, int $data)
+    public function __construct(array $config, array $data)
     {
         if (count($data) != count($config['data'])) {
             die('Tentative : faille XSS');
@@ -62,11 +61,16 @@ class Validator
         return filter_var(trim($string), FILTER_VALIDATE_EMAIL);
     }
 
-    public static function checkPassword(string $string): string
+    public static function checkPassword(string $string): bool
     {
         return
                     preg_match('#[a-z]#', $string) &&
                     preg_match('#[A-Z]#', $string) &&
                     preg_match('#[0-9]#', $string);
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 }

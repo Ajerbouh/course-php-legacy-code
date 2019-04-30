@@ -2,8 +2,26 @@
 declare(strict_types = 1);
 namespace Controller;
 
+use Core\Validator;
+use Core\View;
+use Form\LoginForm;
+use Form\RegisterForm;
+use Models\Users;
+use Repository\UserRepository;
+
 class UsersController
 {
+
+    private $user;
+    private $userRepository;
+
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->user = new Users();
+        $this->userRepository = $userRepository;
+    }
+
     public function defaultAction(): void
     {
         echo 'users default';
@@ -11,30 +29,33 @@ class UsersController
 
     public function addAction(): void
     {
-        $user = new Users();
-        $form = $user->getRegisterForm();
+        $register = new RegisterForm();
+        $form = $register->getRegisterForm();
 
         $v = new View('addUser', 'front');
         $v->assign('form', $form);
     }
 
+    /**
+     *
+     */
     public function saveAction(): void
     {
-        $user = new Users();
-        $form = $user->getRegisterForm();
+        $register = new RegisterForm();
+        $form = $register->getRegisterForm();
         $method = strtoupper($form['config']['method']);
         $data = $GLOBALS['_'.$method];
 
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
             $validator = new Validator($form, $data);
-            $form['errors'] = $validator->errors;
+            $form['errors'] = $validator->getErrors();
 
             if (empty($errors)) {
-                $user->setFirstname($data['firstname']);
-                $user->setLastname($data['lastname']);
-                $user->setEmail($data['email']);
-                $user->setPwd($data['pwd']);
-                $user->save();
+                $this->user->setFirstname($data['firstname']);
+                $this->user->setLastname($data['lastname']);
+                $this->user->setEmail($data['email']);
+                $this->user->setPwd($data['pwd']);
+                $this->userRepository->save($this->user);
             }
         }
 
@@ -44,14 +65,14 @@ class UsersController
 
     public function loginAction(): void
     {
-        $user = new Users();
-        $form = $user->getLoginForm();
+        $login = new LoginForm();
+        $form = $login->getLoginForm();
 
         $method = strtoupper($form['config']['method']);
         $data = $GLOBALS['_'.$method];
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
             $validator = new Validator($form, $data);
-            $form['errors'] = $validator->errors;
+            $form['errors'] = $validator->getErrors();
 
             if (empty($errors)) {
                 $token = md5(substr(uniqid().time(), 4, 10).'mxu(4il');
