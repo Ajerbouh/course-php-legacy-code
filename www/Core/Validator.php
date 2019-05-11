@@ -6,6 +6,11 @@ class Validator
 {
     private $errors = [];
 
+    /**
+     * Validator constructor.
+     * @param array $config
+     * @param array $data
+     */
     public function __construct(array $config, array $data)
     {
         if (count($data) != count($config['data'])) {
@@ -69,7 +74,7 @@ class Validator
                     preg_match('#[0-9]#', $string);
     }
 
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }

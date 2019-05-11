@@ -5,6 +5,7 @@
  * Date: 30/04/2019
  * Time: 10:15
  */
+declare(strict_types=1);
 
 use Controller\PagesController;
 use Controller\UsersController;

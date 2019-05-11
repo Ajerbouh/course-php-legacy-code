@@ -5,6 +5,7 @@
  * Date: 29/04/2019
  * Time: 16:18
  */
+declare(strict_types=1);
 namespace Form;
 
 use Core\Routing;

@@ -1,8 +1,8 @@
 <?php
-
+declare(strict_types=1);
 use Core\Routing;
 
-function myAutoloader($class)
+function myAutoloader($class): void
 {
     $classname = substr($class, strpos($class, '\\') + 1);
 
@@ -10,6 +10,7 @@ function myAutoloader($class)
     $classModel = "Models/".$classname.".php";
     $classForm = "Form/".$classname.".php";
     $classRepository = "Repository/".$classname.".php";
+    $classValueObject = "ValueObject".$classname.".php";
 
     if (file_exists($classPath)) {
         require $classPath;
@@ -19,6 +20,8 @@ function myAutoloader($class)
         require $classForm;
     } elseif (file_exists($classRepository)) {
         require $classRepository;
+    } elseif (file_exists($classValueObject)) {
+        require $classValueObject;
     }
 }
 

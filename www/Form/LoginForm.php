@@ -5,6 +5,7 @@
  * Date: 29/04/2019
  * Time: 16:08
  */
+declare(strict_types=1);
 namespace Form;
 
 final class LoginForm
